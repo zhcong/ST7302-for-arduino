@@ -20,7 +20,9 @@ class ST7302SPI
     void flush_buffer();
     void send_command(uint8_t command);
     void send_param(uint8_t param);
-    void set_1();
+    // x_start_byte is byte array start position, not x pixel
+    void set_memory(int x_start_byte, int y, int width, int height, uint8_t * data, int len) ;
+    void text(int x_start_byte, int y, char words[], int len);
 
   private:
     uint8_t _sck_pin, _miso_pin, _mosi_pin, _reset_pin, _dc_pin, _cs_pin;

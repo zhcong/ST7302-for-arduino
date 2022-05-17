@@ -1,4 +1,5 @@
 #include "ST7302SPI.h"
+#include "font.h"
 
 ST7302SPI::ST7302SPI(uint8_t sck_pin, uint8_t miso_pin, uint8_t mosi_pin, uint8_t reset_pin, uint8_t dc_pin, uint8_t cs_pin, uint8_t width, uint8_t height)
 {
@@ -131,6 +132,31 @@ void ST7302SPI::inversion_on()
   send_command(0x21);
 }
 
+// x_start_byte is byte array start position, not x pixel
+void ST7302SPI::set_memory(int x_start_byte, int y, int width, int height, uint8_t * data, int len) {
+  // set buffer
+  int len_i = 0;
+  int width_byte_size = int(_width / BYTE_BIT_SIZE);
+  int part_width_byte_size = int(width / BYTE_BIT_SIZE);
+  int byte_start = y * width_byte_size + x_start_byte;
+  for (int i = 0; i != part_width_byte_size; i++) {
+    for (int j = 0; j != height; j++) {
+      if (len_i == len) {
+        return;
+      }
+      _buffer[byte_start + j * width_byte_size + i] = data[len_i];
+      len_i++;
+    }
+  }
+}
+
+// x_start_byte is byte array start position, not x pixel
+void ST7302SPI::text(int x_start_byte, int y, char words[], int len) {
+  for (int i = 0; i != len; i++) {
+    set_memory(x_start_byte +  int((i * FONT_SIZE) / BYTE_BIT_SIZE), y, FONT_SIZE, FONT_SIZE, ascii_font[words[i]], FONT_SIZE);
+  }
+}
+
 void ST7302SPI::flush_buffer() {
   // address set
   send_command(0x2a);
@@ -231,11 +257,4 @@ void ST7302SPI::_send_12_row_bit(int line_i, uint8_t byte0, uint8_t byte1, uint8
          | (byte10 << line_i>> 4 & 0x0C)
          | (byte11 << line_i >> 6 & 0x03);
   SPI.transfer(data);
-}
-
-void ST7302SPI::set_1() {
-//      memset(_buffer, 0xaa, _buffer_size);
-  for (int i = 0; i != _buffer_size; i++) {
-    _buffer[i] = (i / (_width / 8) % 2) == 0 ? 0x55 : 0xaa;
-  }
 }

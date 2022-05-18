@@ -220,7 +220,7 @@ void ST7302SPI::send_param(uint8_t data)
 }
 
 void ST7302SPI::point(uint8_t x, uint8_t y, uint8_t color) {
-  int bits_pos = int(ceil((y * _width + x) / BYTE_BIT_SIZE));
+  int bits_pos = (y * _width + x) / int(BYTE_BIT_SIZE);
   bitWrite(_buffer[bits_pos], int(BYTE_BIT_SIZE) - (y * _width + x) % int(BYTE_BIT_SIZE), color == 1);
 }
 

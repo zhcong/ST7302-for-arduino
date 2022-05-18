@@ -1,4 +1,4 @@
-#include "ST7302SPI.h"
+#include <ST7302SPI.h>
 
 #define _PIN_RST_ 1
 #define _PIN_DC_ 0
@@ -16,6 +16,7 @@ void setup() {
   digitalWrite(12, LOW);
   digitalWrite(13, HIGH);
   st7302spi.begin();
+  st7302spi.inversion_on();
   char str1[] = "hello word1.";
   st7302spi. text(1, 20, str1, strlen(str1));
   st7302spi.flush_buffer();
@@ -24,7 +25,6 @@ void setup() {
   st7302spi. text(1, 40, str2, strlen(str2));
   st7302spi.flush_buffer();
   delay(2000);
-  st7302spi.inversion_on();
   char str3[] = "hello word3.";
   st7302spi. text(1, 80, str3, strlen(str3));
   st7302spi.flush_buffer();

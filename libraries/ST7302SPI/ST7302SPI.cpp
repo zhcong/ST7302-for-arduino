@@ -1,5 +1,5 @@
-#include "ST7302SPI.h"
-#include "font.h"
+#include <ST7302SPI.h>
+#include <font.h>
 
 ST7302SPI::ST7302SPI(uint8_t sck_pin, uint8_t miso_pin, uint8_t mosi_pin, uint8_t reset_pin, uint8_t dc_pin, uint8_t cs_pin, uint8_t width, uint8_t height)
 {

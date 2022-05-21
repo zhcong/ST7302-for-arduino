@@ -139,14 +139,14 @@ void ST7302SPI::set_memory(int x_start_byte, int y, int width, int height, uint8
   int width_byte_size = int(_width / BYTE_BIT_SIZE);
   int part_width_byte_size = int(width / BYTE_BIT_SIZE);
   int byte_start = y * width_byte_size + x_start_byte;
-  for (int i = 0; i != part_width_byte_size; i++) {
-    for (int j = 0; j != height; j++) {
-      if (len_i == len) {
-        return;
+  for (int i = 0; i != height; i++) {
+    for (int j = 0; j != part_width_byte_size; j++) {
+        if (len_i == len) {
+          return;
+        }
+        _buffer[byte_start + i * width_byte_size + j] = data[len_i];
+        len_i++;
       }
-      _buffer[byte_start + j * width_byte_size + i] = data[len_i];
-      len_i++;
-    }
   }
 }
 

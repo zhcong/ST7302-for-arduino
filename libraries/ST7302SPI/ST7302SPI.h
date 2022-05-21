@@ -1,4 +1,3 @@
-#include <Print.h>
 #include <SPI.h>
 #include <Arduino.h>
 
@@ -21,7 +20,7 @@ class ST7302SPI
     void send_command(uint8_t command);
     void send_param(uint8_t param);
     // x_start_byte is byte array start position, not x pixel
-    void set_memory(int x_start_byte, int y, int width, int height, uint8_t * data, int len) ;
+    void set_memory(int x_start_byte, int y, int width, int height, uint8_t * data, int len);
     void text(int x_start_byte, int y, char words[], int len);
 
   private:

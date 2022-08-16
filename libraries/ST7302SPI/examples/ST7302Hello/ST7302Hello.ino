@@ -18,7 +18,7 @@ void setup() {
   //draw point
   st7302spi.point(10,10,1);
   // draw ascii
-  char str1[] = "hello word1.";
+  char str1[] = "hello world.";
   st7302spi. text(1, 20, str1, strlen(str1));
 
   st7302spi.set_memory(0, 40, 32, 32, font, 128);
